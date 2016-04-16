@@ -59,12 +59,23 @@ public class GameManager : MonoBehaviour
             _currentShape = _insatiatedShapes[_currentShapeIndex];
         }
         _currentShape.GetComponent<ShapeController>().beingControlled = true;
-        Debug.Log("Next");
     }
 
     void PreviousCharacter()
     {
-        Debug.Log("Previous");
+        _currentShape.GetComponent<ShapeController>().beingControlled = false;
+        _currentShapeIndex--;
+        if (_currentShapeIndex < 0)
+        {
+            int lastIndex = _insatiatedShapes.Count - 1;
+            _currentShapeIndex = lastIndex;
+            _currentShape = _insatiatedShapes[lastIndex];
+        }
+        else
+        {
+            _currentShape = _insatiatedShapes[_currentShapeIndex];
+        }
+        _currentShape.GetComponent<ShapeController>().beingControlled = true;
     }
 }
 
