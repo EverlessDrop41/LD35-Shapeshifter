@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public ShapeInfo[] Shapes;
+    public List<ShapeInfo> Shapes;
+    private List<GameObject> _insatiatedShapes = new List<GameObject>();
 
     public Follow CameraFollow;
 
@@ -12,23 +14,57 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
+        int index = 0;
         foreach (ShapeInfo shape in Shapes)
         {
-            if (shape.Shape == Shapes[0].Shape)
+            _insatiatedShapes.Add(Instantiate(shape.Shape, shape.SpawnPosition.position, Quaternion.identity) as GameObject);
+
+            if (index == 0)
             {
-                _currentShape = Instantiate(shape.Shape, shape.SpawnPosition.position, Quaternion.identity) as GameObject;
                 _currentShapeIndex = 0;
+                _currentShape = _insatiatedShapes[index];
+                _currentShape.GetComponent<ShapeController>().beingControlled = true;
             }
-            else
-            {
-                Instantiate(shape.Shape, shape.SpawnPosition.position, Quaternion.identity);
-            }
+
+            index++;
         }
+
     }
 
     public void Update()
     {
-        CameraFollow.target = _currentShape.transform;
+        CameraFollow.Target = _currentShape.transform;
+
+        if (Input.GetButtonDown("Next Character"))
+        {
+            NextCharacter();
+        }
+        else if (Input.GetButtonDown("Previous Character"))
+        {
+            PreviousCharacter();
+        }
+    }
+
+    void NextCharacter()
+    {
+        _currentShape.GetComponent<ShapeController>().beingControlled = false;
+        _currentShapeIndex++;
+        if (_currentShapeIndex > _insatiatedShapes.Count - 1)
+        {
+            _currentShapeIndex = 0;
+            _currentShape = _insatiatedShapes[0];
+        }
+        else
+        {
+            _currentShape = _insatiatedShapes[_currentShapeIndex];
+        }
+        _currentShape.GetComponent<ShapeController>().beingControlled = true;
+        Debug.Log("Next");
+    }
+
+    void PreviousCharacter()
+    {
+        Debug.Log("Previous");
     }
 }
 
