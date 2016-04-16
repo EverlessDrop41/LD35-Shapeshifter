@@ -63,8 +63,10 @@ public class ShapeController : MonoBehaviour
         bool grounded = groundCheck;
         Debug.DrawLine(transform.position, new Vector2 (transform.position.x, transform.position.y) + (-Vector2.up * (halfHeight + GroundCheckDistance)), grounded ? Color.red : Color.green);
 
+        //Actually Move
         _rb.velocity = moveVector;
 
+        //Jump
         if (_wantsToJump && grounded)
         {
             _rb.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
