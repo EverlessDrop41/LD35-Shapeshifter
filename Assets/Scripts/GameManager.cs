@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
+    public Image ActiveCharacterImage;
+
     public List<ShapeInfo> Shapes;
     private List<GameObject> _insatiatedShapes = new List<GameObject>();
 
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
                 _currentShapeIndex = 0;
                 _currentShape = _insatiatedShapes[index];
                 _currentShape.GetComponent<ShapeController>().beingControlled = true;
+                UpdateActiveCharacterImage(Shapes[index]);
             }
 
             index++;
@@ -58,6 +61,7 @@ public class GameManager : MonoBehaviour
         {
             _currentShape = _insatiatedShapes[_currentShapeIndex];
         }
+        UpdateActiveCharacterImage(Shapes[_currentShapeIndex]);
         _currentShape.GetComponent<ShapeController>().beingControlled = true;
     }
 
@@ -75,7 +79,14 @@ public class GameManager : MonoBehaviour
         {
             _currentShape = _insatiatedShapes[_currentShapeIndex];
         }
+        UpdateActiveCharacterImage(Shapes[_currentShapeIndex]);
         _currentShape.GetComponent<ShapeController>().beingControlled = true;
+    }
+
+    void UpdateActiveCharacterImage(ShapeInfo shapeInfo)
+    {
+        ActiveCharacterImage.sprite = shapeInfo.GuiImage;
+        ActiveCharacterImage.color = shapeInfo.Color;
     }
 }
 
@@ -84,5 +95,6 @@ public struct ShapeInfo
 {
     public GameObject Shape;
     public Transform SpawnPosition;
-    public Image GuiImage;
+    public Sprite GuiImage;
+    public Color Color;
 }

@@ -53,12 +53,12 @@ public class ShapeController : MonoBehaviour
             newScale.y = Mathf.Clamp(newScale.y, MinScale, MaxScale);
             transform.localScale = newScale;
 
-            //Rotate
+            /*//Rotate
             float RotateAmount = _rotateInput * RotateSpeed;
             float newRot = transform.rotation.z + RotateAmount;
             //        _rb.rotation += (newRot);
             _rb.angularVelocity += RotateAmount * Time.deltaTime;
-            _rb.angularVelocity = Mathf.Clamp(_rb.angularVelocity, -RotateSpeed, RotateSpeed);
+            _rb.angularVelocity = Mathf.Clamp(_rb.angularVelocity, -RotateSpeed, RotateSpeed);*/
 
 
             //Check if grounded
