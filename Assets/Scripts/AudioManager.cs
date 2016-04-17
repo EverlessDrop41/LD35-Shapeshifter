@@ -4,29 +4,31 @@ using System.Collections;
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance;
+    private static AudioManager instance;
 
     public AudioClip GameLoop;
     private AudioSource _source;
 
-    void Start()
+    void Awake()
     {
-        _source = GetComponent<AudioSource>();
+        //Check if there is already an instance of SoundManager
+        if (instance == null)
+            //if not, set it to this.
+            instance = this;
+        //If instance already exists:
+        else if (instance != this)
+            //Destroy this, this enforces our singleton pattern so there can only be one instance of SoundManager.
+            Destroy(gameObject);
 
-        if (Instance == null)
+        //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
+        if (_source == null)
         {
-            Instance = this;
-            _source.loop = true;
-            _source.clip = GameLoop;
-            if (!_source.isPlaying) { _source.Play();}
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            _source.Stop();
-            Destroy(this.gameObject);
-            return;
-        }
+            _source = GetComponent<AudioSource>();
+        } 
+        _source.loop = true;
+        _source.clip = GameLoop;
+        if (!_source.isPlaying) { _source.Play(); }
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
