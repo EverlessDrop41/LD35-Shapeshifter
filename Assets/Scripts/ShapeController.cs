@@ -18,7 +18,7 @@ public class ShapeController : MonoBehaviour
     public float ScaleCost = 2f;
     public float JumpCost = 4f;
     public Text EnergyDisplay;
-    private string EnergyDisplayFormat = "Energy: {0: 00.00;-00.00}";
+    private string EnergyDisplayFormat = "Energy: {0: 00.0;-00.0}";
 
     public float JumpForce = 10f;
 
@@ -131,6 +131,12 @@ public class ShapeController : MonoBehaviour
             _currentEnergy = MaxEnergy;
         }
     }
+
+    public void AddEnergy(float amount)
+    {
+        _currentEnergy += amount;
+        if (_currentEnergy > MaxEnergy) _currentEnergy = MaxEnergy;
+    } 
 
     private void UpdateGUI()
     {
