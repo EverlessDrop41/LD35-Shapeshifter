@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public Image ActiveCharacterImage;
+    public Text EnergyDisplay;
 
     public List<ShapeInfo> Shapes;
     private List<GameObject> _insatiatedShapes = new List<GameObject>();
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
         foreach (ShapeInfo shape in Shapes)
         {
             _insatiatedShapes.Add(Instantiate(shape.Shape, shape.SpawnPosition.position, Quaternion.identity) as GameObject);
+            _insatiatedShapes[index].GetComponent<ShapeController>().EnergyDisplay = EnergyDisplay;
 
             if (index == 0)
             {
@@ -45,6 +48,11 @@ public class GameManager : MonoBehaviour
         else if (Input.GetButtonDown("Previous Character"))
         {
             PreviousCharacter();
+        }
+
+        if (Input.GetButtonDown("Cancel"))
+        {
+            SceneManager.LoadScene(0);
         }
     }
 
