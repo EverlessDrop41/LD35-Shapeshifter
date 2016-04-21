@@ -58,6 +58,33 @@ public class ShapeController : MonoBehaviour
             UpdateGUI();
             Vector2 moveVector = _rb.velocity;
 
+			//Check if grounded
+			var s = transform.lossyScale;
+			float halfWidth = s.x / 2;
+			float halfHeight = s.y / 2;
+
+			Vector2 lPos = new Vector2 (transform.position.x - halfWidth, transform.position.y);
+			Vector2 rPos = new Vector2 (transform.position.x + halfWidth, transform.position.y);
+
+			RaycastHit2D groundCheckLeft = Physics2D.Raycast(lPos, -Vector2.up, halfHeight + GroundCheckDistance, WhatIsGround);
+			RaycastHit2D groundCheckMiddle = Physics2D.Raycast(transform.position, -Vector2.up, halfHeight + GroundCheckDistance, WhatIsGround);
+			RaycastHit2D groundCheckRight = Physics2D.Raycast(rPos, -Vector2.up, halfHeight + GroundCheckDistance, WhatIsGround);
+
+			bool grounded = groundCheckLeft || groundCheckMiddle || groundCheckRight;
+
+			Debug.DrawLine(transform.position, 
+				new Vector2(transform.position.x, transform.position.y) + (-Vector2.up * (halfHeight + GroundCheckDistance)), 
+				groundCheckMiddle ? Color.red : Color.green
+			);
+			Debug.DrawLine (new Vector3 (lPos.x, lPos.y), 
+				new Vector2 (transform.position.x - halfWidth, transform.position.y) + (-Vector2.up * (halfHeight + GroundCheckDistance)), 
+				groundCheckLeft ? Color.red : Color.green
+			);
+			Debug.DrawLine(new Vector3(rPos.x, rPos.y), 
+				new Vector2(transform.position.x + halfWidth, transform.position.y) + (-Vector2.up * (halfHeight + GroundCheckDistance)),
+				groundCheckRight ? Color.red : Color.green
+			);
+
             if (_currentEnergy > 0)
             {
                 float moveAmount = _moveInput * MoveSpeed;
@@ -71,18 +98,15 @@ public class ShapeController : MonoBehaviour
             }
 
             //Scale
-            var s = transform.localScale;
-            float halfLossyWidth = s.x / 2;
-            float halfLossyHeight = s.y / 2;
 
             //Check Up
-            bool canScaleUp = !Physics2D.Raycast(transform.position, Vector2.up, halfLossyHeight + GroundCheckDistance, WhatStopsScaling);
+            bool canScaleUp = !Physics2D.Raycast(transform.position, Vector2.up, halfHeight + GroundCheckDistance, WhatStopsScaling);
             //Check Down
-            bool canScaleDown = !Physics2D.Raycast(transform.position, Vector2.down, halfLossyHeight + GroundCheckDistance, WhatStopsScaling);
+            bool canScaleDown = !Physics2D.Raycast(transform.position, Vector2.down, halfHeight + GroundCheckDistance, WhatStopsScaling);
             //Check Left
-            bool canScaleLeft = !Physics2D.Raycast(transform.position, Vector2.left, halfLossyWidth + GroundCheckDistance, WhatStopsScaling);
+            bool canScaleLeft = !Physics2D.Raycast(transform.position, Vector2.left, halfWidth + GroundCheckDistance, WhatStopsScaling);
             //Check Right
-            bool canScaleRight = !Physics2D.Raycast(transform.position, Vector2.right, halfLossyWidth + GroundCheckDistance, WhatStopsScaling);
+            bool canScaleRight = !Physics2D.Raycast(transform.position, Vector2.right, halfWidth + GroundCheckDistance, WhatStopsScaling);
 
             bool canIncreaseScale = (canScaleUp || canScaleDown) && (canScaleLeft || canScaleRight);
 
@@ -103,14 +127,8 @@ public class ShapeController : MonoBehaviour
                 
             }
 
-            //Check if grounded
-            float halfHeight = transform.localScale.y / 2;
-            RaycastHit2D groundCheck = Physics2D.Raycast(transform.position, -Vector2.up, halfHeight + GroundCheckDistance, WhatIsGround);
-            bool grounded = groundCheck;
-            Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + (-Vector2.up * (halfHeight + GroundCheckDistance)), grounded ? Color.red : Color.green);
-
-            //Actually Move
-            _rb.velocity = moveVector;
+			//Actually Move
+			_rb.velocity = moveVector;
 
             //Jump
             if (_wantsToJump && grounded && _currentEnergy > JumpCost)
