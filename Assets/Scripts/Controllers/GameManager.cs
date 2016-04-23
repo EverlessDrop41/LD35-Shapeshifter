@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public Image ActiveCharacterImage;
-    public Text EnergyDisplay;
 
     public List<ShapeInfo> Shapes;
     private List<GameObject> _insatiatedShapes = new List<GameObject>();
@@ -22,7 +21,6 @@ public class GameManager : MonoBehaviour
         foreach (ShapeInfo shape in Shapes)
         {
             _insatiatedShapes.Add(Instantiate(shape.Shape, shape.SpawnPosition.position, Quaternion.identity) as GameObject);
-            _insatiatedShapes[index].GetComponent<ShapeController>().EnergyDisplay = EnergyDisplay;
 
             if (index == 0)
             {

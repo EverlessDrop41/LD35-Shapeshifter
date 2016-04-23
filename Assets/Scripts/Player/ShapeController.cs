@@ -12,14 +12,6 @@ public class ShapeController : MonoBehaviour
     public float MinScale = 0.1f;
     public float MaxScale = 10f;
 
-    public float MaxEnergy = 10f;
-    public float EnergyRegenRate = 1f;
-    public float MoveCost = 1f;
-    public float ScaleCost = 2f;
-    public float JumpCost = 4f;
-    public Text EnergyDisplay;
-    private string EnergyDisplayFormat = "Energy: {0: 00.0;-00.0}";
-
     public float JumpForce = 10f;
 
     public float GroundCheckDistance = .1f;
@@ -36,13 +28,6 @@ public class ShapeController : MonoBehaviour
     private float _moveInput;
     private float _scaleInput;
     private bool _wantsToJump;
-
-    private float _currentEnergy;
-
-    public void Awake()
-    {
-        _currentEnergy = MaxEnergy;
-    }
 
     void Update()
     {
@@ -85,17 +70,9 @@ public class ShapeController : MonoBehaviour
 				groundCheckRight ? Color.red : Color.green
 			);
 
-            if (_currentEnergy > 0)
-            {
-                float moveAmount = _moveInput * MoveSpeed;
-                moveVector = new Vector2(moveAmount, _rb.velocity.y);
-                moveVector.x = Mathf.Clamp(moveVector.x, -MoveSpeed, MoveSpeed);
-
-                if (moveAmount != 0)
-                {
-                    _currentEnergy -= MoveCost*Time.deltaTime;
-                }
-            }
+			float moveAmount = _moveInput * MoveSpeed;
+            moveVector = new Vector2(moveAmount, _rb.velocity.y);
+            moveVector.x = Mathf.Clamp(moveVector.x, -MoveSpeed, MoveSpeed);
 
             //Scale
 
@@ -110,20 +87,13 @@ public class ShapeController : MonoBehaviour
 
             bool canIncreaseScale = (canScaleUp || canScaleDown) && (canScaleLeft || canScaleRight);
 
-            if ((_scaleInput < 0 || canIncreaseScale) && _currentEnergy > 0)
+            if ((_scaleInput < 0 || canIncreaseScale))
             {
                 float scaleAmount = _scaleInput * ScaleSpeed;
                 Vector3 newScale = transform.localScale + (new Vector3(scaleAmount, scaleAmount) * Time.fixedDeltaTime);
                 newScale.x = Mathf.Clamp(newScale.x, MinScale, MaxScale);
                 newScale.y = Mathf.Clamp(newScale.y, MinScale, MaxScale);
                 transform.localScale = newScale;
-
-                
-                if (_scaleInput != 0)
-                {
-                    Debug.Log("Scaling");
-                    _currentEnergy -= ScaleCost * Time.fixedDeltaTime;
-                }
                 
             }
 
@@ -131,36 +101,16 @@ public class ShapeController : MonoBehaviour
 			_rb.velocity = moveVector;
 
             //Jump
-            if (_wantsToJump && grounded && _currentEnergy > JumpCost)
+            if (_wantsToJump && grounded)
             {
-                _currentEnergy -= JumpCost;
                 _rb.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
                 _wantsToJump = false;
             }
         }
-
-        //Energy Regen
-        if (_currentEnergy < MaxEnergy)
-        {
-            _currentEnergy += EnergyRegenRate * Time.fixedDeltaTime;
-        }
-        else
-        {
-            _currentEnergy = MaxEnergy;
-        }
     }
-
-    public void AddEnergy(float amount)
-    {
-        _currentEnergy += amount;
-        if (_currentEnergy > MaxEnergy) _currentEnergy = MaxEnergy;
-    } 
 
     private void UpdateGUI()
     {
-        if (EnergyDisplay)
-        {
-            EnergyDisplay.text = string.Format(EnergyDisplayFormat, _currentEnergy);
-        }
+		//Nothing Yet
     }
 }
