@@ -87,4 +87,25 @@ public class DoorControl: MonoBehaviour {
 		isClosing = true;
 		isOpening = false;
 	}
+
+	public void OnDrawGizmos() {
+		Color closedDoorColor = new Color (255, 0, 0, .5f);
+		Color openDoorColor = new Color (0, 255, 0, .5f);
+		if (OpenedPosition && ClosedPosition) {
+			Gizmos.color = Color.green;
+			Gizmos.DrawLine (transform.position, OpenedPosition.position);
+			Gizmos.color = openDoorColor;
+			Gizmos.DrawCube (OpenedPosition.position, transform.lossyScale);
+
+			Gizmos.color = Color.red;
+			Gizmos.DrawLine (transform.position, ClosedPosition.position);
+			Gizmos.color = closedDoorColor;
+			Gizmos.DrawCube (ClosedPosition.position, transform.lossyScale);
+		}
+
+		if (input) {
+			Gizmos.color = Color.blue;
+			Gizmos.DrawLine (transform.position, input.transform.position);
+		}
+	}
 }
