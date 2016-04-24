@@ -10,6 +10,11 @@ public class MovingPlatformEditor : Editor {
 		MovingPlatform mp = target as MovingPlatform;
 		DrawDefaultInspector ();
 
+		EditorGUILayout.HelpBox (
+			"Green: Point A, Red: Point B",
+			MessageType.Info
+		);
+
 		GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
 				GUILayout.Label ("Move Platform");
@@ -32,8 +37,11 @@ public class MovingPlatformEditor : Editor {
 	public void OnSceneGUI () {
 		MovingPlatform mp = target as MovingPlatform;
 	
-		mp.PositionA = Handles.FreeMoveHandle (mp.PositionA, Quaternion.identity, .1f, new Vector3(.5f, .5f, .5f), Handles.DotCap);
-		mp.PositionB = Handles.FreeMoveHandle (mp.PositionB, Quaternion.identity, .1f, new Vector3(.5f, .5f, .5f), Handles.DotCap);
+		Handles.color = Color.white;
 		Handles.DrawLine (mp.PositionA, mp.PositionB);
+		Handles.color = Color.green;
+		mp.PositionA = Handles.FreeMoveHandle (mp.PositionA, Quaternion.identity, .1f, new Vector3(.5f, .5f, .5f), Handles.DotCap);
+		Handles.color = Color.red;
+		mp.PositionB = Handles.FreeMoveHandle (mp.PositionB, Quaternion.identity, .1f, new Vector3(.5f, .5f, .5f), Handles.DotCap);
 	}
 }
