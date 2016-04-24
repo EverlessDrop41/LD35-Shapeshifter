@@ -90,7 +90,7 @@ public class ShapeController : MonoBehaviour
             if ((_scaleInput < 0 || canIncreaseScale))
             {
                 float scaleAmount = _scaleInput * ScaleSpeed;
-                Vector3 newScale = transform.localScale + (new Vector3(scaleAmount, scaleAmount) * Time.fixedDeltaTime);
+				Vector3 newScale = transform.localScale + (new Vector3(scaleAmount, scaleAmount, scaleAmount) * Time.fixedDeltaTime);
                 newScale.x = Mathf.Clamp(newScale.x, MinScale, MaxScale);
                 newScale.y = Mathf.Clamp(newScale.y, MinScale, MaxScale);
                 transform.localScale = newScale;
@@ -106,6 +106,9 @@ public class ShapeController : MonoBehaviour
                 _rb.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
                 _wantsToJump = false;
             }
+
+			//Fix Scale
+			transform.localScale = Vector3.one * transform.localScale.z;
         }
     }
 
