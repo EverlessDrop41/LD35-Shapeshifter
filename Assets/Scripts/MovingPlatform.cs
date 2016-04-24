@@ -7,7 +7,7 @@ public class MovingPlatform : MonoBehaviour {
 	public Vector3 PositionB = new Vector3(0, -1);
 	public float MoveSpeed = 5f;
 	public bool Active = true;
-	public bool StartMovingToA = true;
+	public bool StartMovingToB = true;
 
 	private bool movingToA;
 
@@ -16,7 +16,7 @@ public class MovingPlatform : MonoBehaviour {
 
 	void Start() {
 		startTime = Time.time;
-		movingToA = StartMovingToA;
+		movingToA = StartMovingToB;
 		parentPad = new GameObject ("Parent Pad");
 		parentPad.transform.parent = transform;
 	}
