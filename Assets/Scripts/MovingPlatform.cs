@@ -50,7 +50,6 @@ public class MovingPlatform : MonoBehaviour {
 		if(coll.gameObject.tag == "Player") {
 			if (coll.contacts.Length > 0) {
 				ContactPoint2D contact = coll.contacts[0];
-				Debug.Log(contact.normal);
 				if (contact.normal == new Vector2(0, -1)) {
 					coll.transform.parent = parentPad.transform;
 				}

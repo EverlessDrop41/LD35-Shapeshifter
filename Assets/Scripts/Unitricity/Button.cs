@@ -31,7 +31,6 @@ public class Button: ElectricalObject {
 		colliding = true;
 		if (collision.contacts.Length > 0) {
 			ContactPoint2D contact = collision.contacts[0];
-            Debug.Log(contact.normal);
 			if (contact.normal == new Vector2(0, -1)) {
 				transform.position = DownPos;
 				IsActive = true;

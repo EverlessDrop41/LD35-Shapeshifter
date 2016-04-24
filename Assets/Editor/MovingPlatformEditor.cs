@@ -38,7 +38,7 @@ public class MovingPlatformEditor : Editor {
 		MovingPlatform mp = target as MovingPlatform;
 	
 		Handles.color = Color.white;
-		Handles.DrawLine (mp.PositionA, mp.PositionB);
+		Handles.DrawDottedLine (mp.PositionA, mp.PositionB, 3);
 		Handles.color = Color.green;
 		mp.PositionA = Handles.FreeMoveHandle (mp.PositionA, Quaternion.identity, .1f, new Vector3(.5f, .5f, .5f), Handles.DotCap);
 		Handles.color = Color.red;
