@@ -106,9 +106,6 @@ public class ShapeController : MonoBehaviour
                 _rb.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
                 _wantsToJump = false;
             }
-
-			//Fix Scale
-			transform.localScale = Vector3.one * transform.localScale.z;
         }
     }
 

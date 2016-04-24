@@ -17,6 +17,8 @@ public class MovingPlatform : MonoBehaviour {
 	void Start() {
 		startTime = Time.time;
 		movingToA = StartMovingToA;
+		parentPad = new GameObject ("Parent Pad");
+		parentPad.transform.parent = transform;
 	}
 
 	void FixedUpdate() {
@@ -42,13 +44,15 @@ public class MovingPlatform : MonoBehaviour {
 		}
 	}
 
+	GameObject parentPad;
+
 	void OnCollisionEnter2D (Collision2D coll) {
 		if(coll.gameObject.tag == "Player") {
 			if (coll.contacts.Length > 0) {
 				ContactPoint2D contact = coll.contacts[0];
 				Debug.Log(contact.normal);
 				if (contact.normal == new Vector2(0, -1)) {
-					coll.transform.parent = transform;
+					coll.transform.parent = parentPad.transform;
 				}
 			}
 		} else {
