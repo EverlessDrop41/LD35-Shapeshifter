@@ -10,6 +10,13 @@ public class MovingPlatformEditor : Editor {
 		MovingPlatform mp = target as MovingPlatform;
 		DrawDefaultInspector ();
 
+		float dist = Vector3.Distance (mp.PositionB, mp.PositionA);
+
+		EditorGUILayout.HelpBox (
+			string.Format("The platforms are {0} units apart\n\nIt will take {1} seconds for the platform to move to each point", dist,dist/mp.MoveSpeed),
+			MessageType.None
+		);
+
 		EditorGUILayout.HelpBox (
 			"Green: Point A, Red: Point B",
 			MessageType.Info
