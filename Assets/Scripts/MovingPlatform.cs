@@ -68,4 +68,14 @@ public class MovingPlatform : MonoBehaviour {
 			coll.transform.parent = null;
 		}
 	}
+
+	public void OnDrawGizmos() {
+		Color bCol = new Color (255, 0, 0, .5f);
+		Color aCol = new Color (0, 255, 0, .5f);
+		Gizmos.color = aCol;
+		Gizmos.DrawCube (PositionA, transform.lossyScale);
+
+		Gizmos.color = bCol;
+		Gizmos.DrawCube (PositionB, transform.lossyScale);
+	}
 }
