@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11444360}
   m_Layer: 12
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,6 +31,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &5071238
 Rigidbody2D:
   serializedVersion: 2
@@ -78,12 +79,6 @@ MonoBehaviour:
   ScaleSpeed: 5
   MinScale: 0.1
   MaxScale: 10
-  MaxEnergy: 10
-  EnergyRegenRate: 0.5
-  MoveCost: 1
-  ScaleCost: 2
-  JumpCost: 2
-  EnergyDisplay: {fileID: 0}
   JumpForce: 10
   GroundCheckDistance: 0.1
   WhatIsGround:
@@ -101,13 +96,14 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 0
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0

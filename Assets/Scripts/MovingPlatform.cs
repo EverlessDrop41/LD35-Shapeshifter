@@ -18,6 +18,7 @@ public class MovingPlatform : MonoBehaviour {
 		startTime = Time.time;
 		movingToA = StartMovingToA;
 	}
+
 	void FixedUpdate() {
 		Vector3 beforePos = transform.position;
 		float distCovered = (Time.time - startTime) * MoveSpeed;
@@ -39,7 +40,29 @@ public class MovingPlatform : MonoBehaviour {
 				movingToA = true;
 			}
 		}
+	}
 
+	void OnCollisionEnter2D (Collision2D coll) {
+		if(coll.gameObject.tag == "Player") {
+			if (coll.contacts.Length > 0) {
+				ContactPoint2D contact = coll.contacts[0];
+				Debug.Log(contact.normal);
+				if (contact.normal == new Vector2(0, -1)) {
+					coll.transform.parent = transform;
+				}
+			}
+		} else {
+			coll.transform.parent = null;
+		}
+	}
 
+	void OnCollisionStay2D (Collision2D coll) {
+		OnCollisionEnter2D (coll);
+	}
+
+	void OnCollisionExit2D (Collision2D coll) {
+		if(coll.gameObject.tag == "Player") {
+			coll.transform.parent = null;
+		}
 	}
 }
