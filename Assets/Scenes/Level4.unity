@@ -2968,7 +2968,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000013388761936, guid: 85c9c476e0cfb4b33b13e184e1daf4e0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 29.32
+      value: 29.01
       objectReference: {fileID: 0}
     - target: {fileID: 4000013388761936, guid: 85c9c476e0cfb4b33b13e184e1daf4e0, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3000,11 +3000,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013388761936, guid: 85c9c476e0cfb4b33b13e184e1daf4e0, type: 2}
       propertyPath: m_LocalScale.x
-      value: 3.6586947
+      value: 5.1287413
       objectReference: {fileID: 0}
     - target: {fileID: 4000013388761936, guid: 85c9c476e0cfb4b33b13e184e1daf4e0, type: 2}
       propertyPath: m_LocalScale.y
-      value: 2.7393038
+      value: 2.9987237
       objectReference: {fileID: 0}
     - target: {fileID: 114000012410241600, guid: 85c9c476e0cfb4b33b13e184e1daf4e0,
         type: 2}
@@ -3019,7 +3019,7 @@ Prefab:
     - target: {fileID: 114000012410241600, guid: 85c9c476e0cfb4b33b13e184e1daf4e0,
         type: 2}
       propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85c9c476e0cfb4b33b13e184e1daf4e0, type: 2}
